@@ -38,9 +38,36 @@ services:
                 - ping
             retries: 3
             timeout: 5s
+
+    postgres:
+        image: "postgres"
+        restart: always
+        environment:
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=root
+        networks:
+            - sail
+        ports:
+            - "${FORWARD_POSTGRES_PORT:-5432}:5432"
+        volumes:
+            - dbdata:/var/lib/postgresql/data
+
+    pgadmin-compose:
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: "finance@email.com"
+            PGADMIN_DEFAULT_PASSWORD: "finance"
+        networks:
+            - sail
+        ports:
+            - "54321:80"
+        depends_on:
+            - postgres
 networks:
     sail:
         driver: bridge
 volumes:
     sail-redis:
+        driver: local
+    dbdata:
         driver: local
