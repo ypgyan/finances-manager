@@ -45,4 +45,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function revokeTokens(): void
+    {
+        $this->tokens()->each(function ($token) {
+            $token->revoke();
+        });
+    }
 }
