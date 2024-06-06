@@ -23,7 +23,7 @@ A step by step series of examples that tell you how to get a development environ
 
 ## Usage
 
-A few examples of useful commands or tasks.
+See the docs: https://documenter.getpostman.com/view/4704378/2sA3QzbUve#5276a53a-bbae-4b9c-97e1-e9c1fa428959
 
 ## Running the tests
 
