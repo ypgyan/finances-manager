@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -32,6 +33,7 @@ class AuthController extends Controller
             ]);
             return response()->json(new UserResource($user));
         } catch (Exception $e) {
+            Log::error($e);
             throw new AuthException("Sorry, something went wrong");
         }
     }
