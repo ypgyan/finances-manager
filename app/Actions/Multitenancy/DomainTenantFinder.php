@@ -13,8 +13,7 @@ class DomainTenantFinder extends TenantFinder
 
     public function findForRequest(Request $request): ?Tenant
     {
-        $host = $request->user()?->id;
-
+        $host = $request->header('domain-id', null);
         return $this->getTenantModel()::whereDomain($host)->first();
     }
 }
