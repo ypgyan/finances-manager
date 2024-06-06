@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\Shared\CreateTenant;
 use App\Exceptions\Auth\AuthException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Auth\UserResource;
@@ -17,7 +18,7 @@ class AuthController extends Controller
     /**
      * @throws AuthException
      */
-    public function signUp(Request $request): JsonResponse
+    public function signUp(Request $request, CreateTenant $createTenant): JsonResponse
     {
         $request->validate([
             'name' => 'required|string|min:3|max:255',
@@ -31,9 +32,9 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
             ]);
+            $createTenant->execute($user->name, $user->id);
             return response()->json(new UserResource($user));
         } catch (Exception $e) {
-            Log::error($e);
             throw new AuthException("Sorry, something went wrong");
         }
     }
