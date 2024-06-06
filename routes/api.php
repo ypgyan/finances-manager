@@ -11,12 +11,12 @@ Route::get('/', function (Request $request) {
    ]);
 });
 
+// Authentication routes
 Route::post('/signup', [AuthController::class, 'signUp'])->name('signUp');
 Route::post('/signin', [AuthController::class, 'signIn'])->name('signIn');
 
 Route::middleware('tenant')->group(function () {
     Route::get('/user', function (Request $request) {
-        $tenant = Spatie\Multitenancy\Models\Tenant::current();
         return $request->user();
     })->middleware('auth:api');
 });
